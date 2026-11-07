@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhiskerHub'a Hoş Geldin</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="whiskerhub.png">
+<link rel="apple-touch-icon" href="whiskerhub.png">
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
+    background: linear-gradient(135deg, #fde2e4 0%, #fad2e1 40%, #e2ece9 100%);
+    overflow: hidden;
+    position: relative;
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><circle cx='16' cy='16' r='10' fill='%23ffb3c6' stroke='%23d6336c' stroke-width='2'/><circle cx='12' cy='13' r='1.5' fill='%23d6336c'/><circle cx='20' cy='13' r='1.5' fill='%23d6336c'/><path d='M13 18 Q16 21 19 18' stroke='%23d6336c' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>") 16 16, auto;
+  }
+
+  /* Arka planda yüzen patiler */
+  .paw {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    opacity: 0.15;
+    pointer-events: none;
+    animation: floatUp linear infinite;
+  }
+
+  .paw svg {
+    width: 100%;
+    height: 100%;
+    fill: #d6336c;
+  }
+
+  @keyframes floatUp {
+    0% {
+      transform: translateY(110vh) rotate(0deg) scale(0.8);
+      opacity: 0;
+    }
+    10% { opacity: 0.18; }
+    90% { opacity: 0.18; }
+    100% {
+      transform: translateY(-20vh) rotate(360deg) scale(1.1);
+      opacity: 0;
+    }
+  }
+
+  .card {
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 32px;
+    padding: 50px 45px 45px;
+    text-align: center;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(214, 51, 108, 0.18),
+                0 4px 12px rgba(214, 51, 108, 0.08);
+    border: 3px solid #ffd6e0;
+    animation: cardIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes cardIn {
+    from { transform: scale(0.85) translateY(30px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  /* Logo (whiskerhub.png) */
+  .logo-wrap {
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff 0%, #ffe0e9 70%, #ffd6e0 100%);
+    box-shadow: 0 10px 24px rgba(214, 51, 108, 0.22),
+                inset 0 -4px 10px rgba(214, 51, 108, 0.08);
+    border: 3px solid #ffd6e0;
+    animation: bob 3s ease-in-out infinite;
+    overflow: hidden;
+  }
+
+  .logo-wrap img {
+    width: 78%;
+    height: 78%;
+    object-fit: contain;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .logo-wrap:hover img {
+    transform: scale(1.08) rotate(-4deg);
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-8px) rotate(2deg); }
+  }
+
+  /* Logo yüklenemezse SVG kedi yüzü fallback olarak görünür */
+  .logo-fallback {
+    display: none;
+    width: 130px;
+    height: 130px;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+    color: #a4133c;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+    font-weight: 800;
+  }
+
+  .subtitle {
+    font-size: 1.02rem;
+    color: #6d4c5b;
+    line-height: 1.6;
+    margin-bottom: 32px;
+    padding: 0 8px;
+  }
+
+  .subtitle .highlight {
+    color: #d6336c;
+    font-weight: 600;
+  }
+
+  /* Buton */
+  .go-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #ff8fab 0%, #d6336c 100%);
+    color: #fff;
+    border: none;
+    padding: 16px 38px;
+    font-size: 1.12rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(214, 51, 108, 0.35);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.25s ease;
+    overflow: hidden;
+    font-family: inherit;
+  }
+
+  .go-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 14px 30px rgba(214, 51, 108, 0.45);
+  }
+
+  .go-btn:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .go-btn .btn-logo {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    border-radius: 50%;
+    background: #fff;
+    padding: 2px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .go-btn:hover .btn-logo {
+    transform: rotate(-15deg) scale(1.15);
+  }
+
+  /* Buton içi parıltı efekti */
+  .go-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.6s ease;
+    pointer-events: none;
+  }
+
+  .go-btn:hover::before {
+    left: 100%;
+  }
+
+  .hint {
+    margin-top: 22px;
+    font-size: 0.82rem;
+    color: #b08d99;
+    font-style: italic;
+  }
+
+  /* Kuyruk sallayan minik kedi (alt köşe) — SVG olarak kalıyor, sadece dekoratif */
+  .corner-cat {
+    position: fixed;
+    bottom: 18px;
+    right: 18px;
+    width: 70px;
+    height: 70px;
+    opacity: 0.75;
+    z-index: 5;
+  }
+
+  .corner-cat .tail {
+    transform-origin: 60px 55px;
+    animation: tailWag 2.2s ease-in-out infinite;
+  }
+
+  @keyframes tailWag {
+    0%, 100% { transform: rotate(-15deg); }
+    50% { transform: rotate(25deg); }
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 38px 26px 34px; }
+    h1 { font-size: 1.55rem; }
+    .logo-wrap { width: 105px; height: 105px; }
+    .go-btn { padding: 14px 30px; font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <!-- Logo: whiskerhub.png -->
+  <div class="logo-wrap" id="logoWrap">
+    <img src="whiskerhub.png" alt="WhiskerHub logosu" id="logoImg">
+  </div>
+
+  <h1>Miyav! Hoş Geldin</h1>
+  <p class="subtitle">
+    Patili dünyamıza adım atmaya hazır mısın?<br>
+    <span class="highlight">WhiskerHub</span> seni bekliyor.
+  </p>
+
+  <button class="go-btn" id="goBtn" type="button">
+    <img src="whiskerhub.png" alt="" class="btn-logo" aria-hidden="true">
+    WhiskerHub'a Git
+  </button>
+
+  <p class="hint">Butona tıklayınca yeni sekmede açılır</p>
+</div>
+
+<!-- Alt köşedeki kuyruk sallayan kedi (dekoratif SVG) -->
+<svg class="corner-cat" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <path class="tail" d="M60 55 Q78 50 74 32 Q72 22 62 26" stroke="#d6336c" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="40" cy="58" rx="22" ry="18" fill="#ffe0e9" stroke="#d6336c" stroke-width="2"/>
+  <circle cx="40" cy="34" r="16" fill="#ffe0e9" stroke="#d6336c" stroke-width="2"/>
+  <path d="M28 24 L26 12 L38 20 Z" fill="#ffb3c6" stroke="#d6336c" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M52 24 L54 12 L42 20 Z" fill="#ffb3c6" stroke="#d6336c" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="34" cy="33" r="2.5" fill="#3d2c35"/>
+  <circle cx="46" cy="33" r="2.5" fill="#3d2c35"/>
+  <path d="M37 39 Q40 42 43 39" stroke="#d6336c" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>
+
+<script>
+  // Pati SVG şablonu
+  const pawSVG = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="7" cy="8" rx="2.2" ry="3"/>
+    <ellipse cx="12" cy="6" rx="2.2" ry="3"/>
+    <ellipse cx="17" cy="8" rx="2.2" ry="3"/>
+    <ellipse cx="19.5" cy="13" rx="2" ry="2.8"/>
+    <path d="M12 11c-3.5 0-6.5 3-6.5 5.5 0 1.8 1.4 2.8 3 2.8 1.2 0 2.2-.6 3.5-.6s2.3.6 3.5.6c1.6 0 3-1 3-2.8C18.5 14 15.5 11 12 11z"/>
+  </svg>`;
+
+  // Rastgele yüzen patiler
+  function spawnPaws(count) {
+    for (let i = 0; i < count; i++) {
+      const paw = document.createElement('div');
+      paw.className = 'paw';
+      paw.innerHTML = pawSVG;
+      paw.style.left = Math.random() * 100 + 'vw';
+      paw.style.animationDuration = (12 + Math.random() * 10) + 's';
+      paw.style.animationDelay = (-Math.random() * 20) + 's';
+      const size = 35 + Math.random() * 40;
+      paw.style.width = size + 'px';
+      paw.style.height = size + 'px';
+      document.body.appendChild(paw);
+    }
+  }
+  spawnPaws(14);
+
+  // Logo yüklenemezse SVG fallback göster
+  const logoImg = document.getElementById('logoImg');
+  const logoWrap = document.getElementById('logoWrap');
+  logoImg.addEventListener('error', () => {
+    logoWrap.innerHTML = `
+      <svg class="logo-fallback" viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg" style="display:block;width:78%;height:78%">
+        <path d="M30 55 L22 18 L58 40 Z" fill="#ffb3c6" stroke="#d6336c" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M100 55 L108 18 L72 40 Z" fill="#ffb3c6" stroke="#d6336c" stroke-width="2.5" stroke-linejoin="round"/>
+        <ellipse cx="65" cy="72" rx="45" ry="42" fill="#ffe0e9" stroke="#d6336c" stroke-width="2.5"/>
+        <ellipse cx="48" cy="68" rx="6" ry="8" fill="#3d2c35"/>
+        <ellipse cx="82" cy="68" rx="6" ry="8" fill="#3d2c35"/>
+        <circle cx="50" cy="65" r="2.2" fill="#fff"/>
+        <circle cx="84" cy="65" r="2.2" fill="#fff"/>
+        <path d="M60 82 L70 82 L65 88 Z" fill="#d6336c"/>
+        <path d="M65 88 Q60 94 54 91" stroke="#d6336c" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M65 88 Q70 94 76 91" stroke="#d6336c" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>`;
+  });
+
+  // Yönlendirme
+  const TARGET = 'https://ayse-create.github.io/WhiskerHub/';
+  const btn = document.getElementById('goBtn');
+
+  btn.addEventListener('click', function () {
+    btn.animate(
+      [
+        { transform: 'scale(1)' },
+        { transform: 'scale(0.94)' },
+        { transform: 'scale(1.06)' },
+        { transform: 'scale(1)' }
+      ],
+      { duration: 350, easing: 'ease-in-out' }
+    );
+    setTimeout(() => {
+      window.open(TARGET, '_blank', 'noopener,noreferrer');
+    }, 180);
+  });
+</script>
+
+</body>
+</html>
